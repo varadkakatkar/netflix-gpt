@@ -1,12 +1,13 @@
 import { useState, useRef } from "react";
 import { Header } from "./Header";
 import { checkValidData } from "../utils/validate";
-
+import { auth } from '../utils/firebase'
+import { createUserWithEmailAndPassword } from "firebase/auth";
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(false);
-  const [errorMessage,setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  const name = useRef(null)
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
 
@@ -15,16 +16,43 @@ const Login = () => {
   };
 
   const handleButtonClick = () => {
-    console.log('email ',email.current.value)
-    console.log('password ',password.current.value)
-    
+    console.log("email ", email.current.value);
+    console.log("password ", password.current.value);
 
     // validate form data
-       const errMessage =checkValidData(email.current.value, password.current.value);
-       console.log('errorMessage ',errMessage);
-       setErrorMessage(errMessage)
-//   };
-  }
+    const errMessage = checkValidData(
+      email.current.value,
+      password.current.value
+    );
+    console.log("errorMessage 1", errMessage);
+    setErrorMessage(errMessage);
+
+    if (errMessage!==null) return;
+    console.log('isSignInForm 1',isSignInForm)
+    if (!isSignInForm) {
+      //signup logic
+      console.log("here 222 ",auth, email.current.value,password.current.value);
+      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+        .then((userCredential) => {
+          // Signed up
+          console.log('userCredential ',userCredential);
+          const user = userCredential.user;
+          console.log('user ',user)
+          // ...
+        })
+        .catch((error) => {
+          console.log('error ',error);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+         
+          setErrorMessage(errorCode+' - '+errMessage)
+          // ..
+        });
+    } else {
+    }
+    //Sign in 
+    //   };
+  };
 
   return (
     <div>
@@ -61,7 +89,10 @@ const Login = () => {
           placeholder="Password"
           className="w-full p-4 my-4 bg-gray-700"
         />
-        <button className="w-full p-4 my-4 bg-red-700" onClick={handleButtonClick}>
+        <button
+          className="w-full p-4 my-4 bg-red-700"
+          onClick={handleButtonClick}
+        >
           {isSignInForm ? "Sign Up" : "Sign In"}
         </button>
         <p className="font-bold text-red-600">{errorMessage}</p>
@@ -73,6 +104,5 @@ const Login = () => {
       </form>
     </div>
   );
-}
+};
 export default Login;
-

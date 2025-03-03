@@ -2,13 +2,21 @@ import { useState, useRef } from "react";
 import { Header } from "./Header";
 import { checkValidData } from "../utils/validate";
 import { auth } from "../utils/firebase";
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword  } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice.js";
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
@@ -45,13 +53,33 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          // Signed up
           console.log("userCredential ", userCredential);
           const user = userCredential.user;
+          updateProfile(auth.currentUser, {
+            displayName: name.current.value,
+            photoURL: "https://st2.depositphotos.com/4111759/12123/v/450/depositphotos_121233300-stock-illustration-female-default-avatar-gray-profile.jpg",
+          })
+            .then(() => {
+              console.log('auth.currentUser ',auth.currentUser)
+              const { uid, email, password, displayName, photoURL } = auth.currentUser;
+
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  password: password,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+             
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
           console.log("user ", user);
-          navigate("/browse")
-          // ...
-        }) 
+        })
         .catch((error) => {
           console.log("error ", error);
           const errorCode = error.code;
@@ -61,12 +89,16 @@ const Login = () => {
           // ..
         });
     } else {
-      signInWithEmailAndPassword(auth, email.current.value,  password.current.value)
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log('user ',user)
-          navigate("/browse")
+          console.log("user ", user);
+          navigate("/browse");
           // ...
         })
         .catch((error) => {
@@ -98,6 +130,7 @@ const Login = () => {
         </h1>
         {isSignInForm && (
           <input
+            ref={name}
             type="text"
             placeholder="Full Name"
             className="w-full p-3 my-2 bg-gray-700 rounded md:p-4 md:my-4"
@@ -122,7 +155,10 @@ const Login = () => {
           {isSignInForm ? "Sign Up" : "Sign In"}
         </button>
         <p className="font-bold text-red-600">{errorMessage}</p>
-        <p className="py-2 cursor-pointer md:py-4 hover:underline" onClick={toggleSignInForm}>
+        <p
+          className="py-2 cursor-pointer md:py-4 hover:underline"
+          onClick={toggleSignInForm}
+        >
           {isSignInForm
             ? "Already registered? Sign In Now"
             : "New to Netflix? Sign Up Now"}

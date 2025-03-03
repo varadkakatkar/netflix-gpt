@@ -10,6 +10,7 @@ import {
 // import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice.js";
+import { USER_AVATAR } from "../utils/constants.js";
 
 const Login = () => {
   const [isSignInForm, setSignInForm] = useState(false);
@@ -57,7 +58,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(auth.currentUser, {
             displayName: name.current.value,
-            photoURL: "https://st2.depositphotos.com/4111759/12123/v/450/depositphotos_121233300-stock-illustration-female-default-avatar-gray-profile.jpg",
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               console.log('auth.currentUser ',auth.currentUser)

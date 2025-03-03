@@ -57,7 +57,7 @@ const Login = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
 
-          setErrorMessage(errorCode + " - " + errMessage);
+          setErrorMessage(errorCode + " - " + errorMessage);
           // ..
         });
     } else {
@@ -72,7 +72,7 @@ const Login = () => {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          setErrorMessage(errorCode + " - " + errMessage);
+          setErrorMessage(errorCode + " - " + errorMessage);
         });
     }
     //Sign in
@@ -91,38 +91,38 @@ const Login = () => {
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="absolute left-0 right-0 w-11/12 md:w-8/12 lg:w-4/12 p-8 md:p-12 mx-auto text-white bg-black rounded-lg my-20 md:my-36 bg-opacity-80"
+        className="absolute left-0 right-0 w-11/12 p-8 mx-auto my-20 text-white bg-black rounded-lg md:w-8/12 lg:w-4/12 md:p-12 md:my-36 bg-opacity-80"
       >
-        <h1 className="py-4 text-2xl md:text-3xl font-bold">
+        <h1 className="py-4 text-2xl font-bold md:text-3xl">
           {isSignInForm ? "Sign Up" : "Sign In"}
         </h1>
         {isSignInForm && (
           <input
             type="text"
             placeholder="Full Name"
-            className="w-full p-3 md:p-4 my-2 md:my-4 bg-gray-700 rounded"
+            className="w-full p-3 my-2 bg-gray-700 rounded md:p-4 md:my-4"
           />
         )}
         <input
           ref={email}
           type="text"
           placeholder="Email Address"
-          className="w-full p-3 md:p-4 my-2 md:my-4 bg-gray-700 rounded"
+          className="w-full p-3 my-2 bg-gray-700 rounded md:p-4 md:my-4"
         />
         <input
           ref={password}
           type="password"
           placeholder="Password"
-          className="w-full p-3 md:p-4 my-2 md:my-4 bg-gray-700 rounded"
+          className="w-full p-3 my-2 bg-gray-700 rounded md:p-4 md:my-4"
         />
         <button
-          className="w-full p-3 md:p-4 my-2 md:my-4 bg-red-700 rounded hover:bg-red-800"
+          className="w-full p-3 my-2 bg-red-700 rounded md:p-4 md:my-4 hover:bg-red-800"
           onClick={handleButtonClick}
         >
           {isSignInForm ? "Sign Up" : "Sign In"}
         </button>
         <p className="font-bold text-red-600">{errorMessage}</p>
-        <p className="py-2 md:py-4 cursor-pointer hover:underline" onClick={toggleSignInForm}>
+        <p className="py-2 cursor-pointer md:py-4 hover:underline" onClick={toggleSignInForm}>
           {isSignInForm
             ? "Already registered? Sign In Now"
             : "New to Netflix? Sign Up Now"}

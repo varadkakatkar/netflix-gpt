@@ -9,6 +9,7 @@ useNowPlayingMovies()
   return (
     <div>
       <Header />
+      {}
     </div>
   );
 };

@@ -18,7 +18,7 @@ const useNowPlayingMovies = () => {
     } catch (error) {
       console.log("error---- ", error);
       // Fall back to mock data
-      const mockData = await import("@/utils/nowPlayingMock.json");
+      const mockData = await import("../utils/nowPlayingMock.json");
       dispatch(addNowPlayingMovies(mockData.default.results));
     }
   };

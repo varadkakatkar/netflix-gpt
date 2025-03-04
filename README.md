@@ -14,6 +14,11 @@
 - Implement Redux store with userSlice
 - registre for TMDB
 - GET data for TMDB now playing movies list
+- Custom Hooks for now playing movies
+- Update store movies 
+- Implement Video Trailer in the background
+
+
 
 #Features 
 -Login/Signup form

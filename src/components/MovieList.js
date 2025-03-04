@@ -1,15 +1,13 @@
 import MovieCard from "./MovieCard";
 
 const MovieList = ({ title, movies }) => {
-  console.log("movies ", movies);
-  
   return (
     <div className="px-6 bg-black">
       <h1 className="py-2 text-3xl text-white">{title}</h1>
-      <div className="flex overflow-x-scroll">
-        <div className="flex">
+      <div className="flex overflow-x-scroll scrollbar-hide hover:overflow-x-auto">
+        <div className="flex gap-4">
           {movies.map((movie) => (
-            <MovieCard posterPath={movie.poster_path} />
+            <MovieCard key={movie.id} posterPath={movie.poster_path} />
           ))}
         </div>
       </div>
@@ -18,3 +16,5 @@ const MovieList = ({ title, movies }) => {
 };
 
 export default MovieList;
+
+

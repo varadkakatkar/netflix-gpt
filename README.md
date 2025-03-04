@@ -12,7 +12,9 @@
 - Deploying app on production
 - Create Signup Account 
 - Implement Redux store with userSlice
-- 
+- registre for TMDB
+- GET data for TMDB now playing movies list
+
 #Features 
 -Login/Signup form
     -Login/ Signup Form 

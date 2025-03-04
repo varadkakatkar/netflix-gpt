@@ -13,10 +13,20 @@ const VideoBackground = ({ movieId }) => {
         (video) => video.type === "Trailer"
       );
       const trailer = filterData.length ? filterData[0] : json.results[0];
-      console.log('trailer ',trailer)
+      console.log('trailer ', trailer);
       console.log("json movie data", json);
     } catch (error) {
-      console.log("error while getting movie videos  ..", error);
+      console.log("API call failed, falling back to mock data...");
+      try {
+        const mockData = await import("../utils/movieVideoDataMock.json");
+        const filterData = mockData.results.filter(
+          (video) => video.type === "Trailer"
+        );
+        const trailer = filterData.length ? filterData[0] : mockData.results[0];
+        console.log('trailer (from mock)', trailer);
+      } catch (mockError) {
+        console.log("Error loading mock data:", mockError);
+      }
     }
   };
 

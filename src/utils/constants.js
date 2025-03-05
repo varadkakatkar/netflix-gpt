@@ -20,6 +20,6 @@ export const BG_URL =
 export const SUPPORTED_LANGUAGES = [
   { indentifier: "en", name: "English" },
   { indentifier: "hindi", name: "Hindi" },
-  { indentifier: "marathi", name: "marathi" },
+  { indentifier: "marathi", name: "Marathi" },
   { indentifier: "spanish", name: "Spanish" },
 ];

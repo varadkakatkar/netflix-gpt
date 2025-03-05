@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LOGO } from "../utils/constants";
+import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { toggleGptSearchView } from "../utils/gptSlice";
 
 export const Header = () => {
@@ -52,6 +52,9 @@ export const Header = () => {
       <img className="w-44" src={LOGO} alt="logo" />
       {user && (
         <div className="flex p-4">
+          <select className="p-2 m-2 text-white bg-gray-900">
+            {SUPPORTED_LANGUAGES.map(lang=> <option value={lang.indentifier}>{lang.name}</option>)}
+          </select>
           <button
             className="px-4 py-2 mx-4 my-2 text-white bg-purple-900 rounded-xl"
             onClick={handleGptSeachClick}
